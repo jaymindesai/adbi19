@@ -47,7 +47,7 @@ def calculate_revenue(strategy, initial_budget, current_budget, advertisers, que
         # Sort the advertisers for this query term/ad-word using algorithm as the key.
         for nbr, bid in sorted(advertisers[query], key=algorithm):
             try:
-                # If all bidding advertiser have exhausted their full budget, continue.
+                # If all bidding advertiser(s) have exhausted their full budget, continue.
                 if current_budget[nbr] >= bid:
                     revenue += bid
                     current_budget[nbr] -= bid
