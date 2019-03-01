@@ -44,14 +44,14 @@ def calculate_revenue(strategy, initial_budget, current_budget, advertisers, que
     algorithm = get_algorithm(strategy, initial_budget, current_budget)
     revenue = 0
     for query in queries:
-        # sort the advertisers for this query term/ad-word using algorithm as the key.
+        # Sort the advertisers for this query term/ad-word using algorithm as the key.
         for nbr, bid in sorted(advertisers[query], key=algorithm):
             try:
                 # If all bidding advertiser have exhausted their full budget, continue.
                 if current_budget[nbr] >= bid:
                     revenue += bid
                     current_budget[nbr] -= bid
-                    # adhering to the assumption that each advertisement slot can be allocated to only one advertiser.
+                    # Adhering to the assumption that each advertisement slot can be allocated to only one advertiser.
                     raise StopIteration
             except StopIteration:
                 # Since this query term/ad-word has already ben allocated a slot, move on to the next ad-word.
