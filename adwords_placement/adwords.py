@@ -28,7 +28,7 @@ def prep_data():
             budget[rows['Advertiser']] = rows['Budget']
     with open('queries.txt', 'r') as f:
         queries = f.read().splitlines()
-    return budget, advertisers, queries
+    return advertisers, budget, queries
 
 
 def calculate_revenue(strategy, initial_budget, current_budget, advertisers, queries):
@@ -118,7 +118,7 @@ def driver(strategy, runs):
     competitive ratio over given number of runs.
     """
     random.seed(0)
-    budget, advertisers, queries = prep_data()
+    advertisers, budget, queries = prep_data()
     opt_revenue = sum(budget.values())
     total_revenue = 0
     for _ in range(runs):
