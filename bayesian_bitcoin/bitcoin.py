@@ -44,12 +44,27 @@ def computeDelta(wt, X, Xi):
     float
         The output of equation 6, a prediction of the average price change.
     """
+    X_mean = X[:-1].mean()
+    X_std = X[:-1].std()
+    X_sim = X[:-1].apply(lambda e: e - X_mean)
+
     n, d = 0, 0
 
     for _, row in Xi.iterrows():
-        t = math.exp(wt * _similarity(X[:-1], row[:-1]))
+        # t = math.exp(wt * _similarity(X[:-1], row[:-1]))
+        t = math.exp(wt * _similarityWithX(X_sim, X_std, row[:-1]))
         n += row[-1] * t
         d += t
+
+    return n / d
+
+
+def _similarityWithX(X, X_std, Xi):
+    Xi_mean = Xi.mean()
+    Xi_std = Xi.std()
+    Xi_norm = Xi.apply(lambda e: e - Xi_mean)
+    n = X.mul(Xi_norm).sum()
+    d = X.size * X_std * Xi_std
 
     return n / d
 
